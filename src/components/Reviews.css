@@ -1,0 +1,33 @@
+img {
+  max-width: 400px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: auto;
+}
+li {
+  max-width: 400px;
+  margin: auto;
+}
+
+.page-selector {
+  display: flex;
+  justify-content: center;
+}
+.page-selector p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 20px;
+  height: 40px;
+}
+.page-selector button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  height: 40px;
+}
