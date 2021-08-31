@@ -1,8 +1,15 @@
 import "./RequireLogin.css";
 import { Link } from "react-router-dom";
 
-function RequireLogin({ user, usersWithInfo, children, setUser }) {
+function RequireLogin({
+  usersLoading,
+  user,
+  usersWithInfo,
+  children,
+  setUser,
+}) {
   if (user) return children;
+  if (usersLoading) return <p>Loading ...</p>;
   return (
     <div>
       <h1>Please Select a User to log in as!</h1>

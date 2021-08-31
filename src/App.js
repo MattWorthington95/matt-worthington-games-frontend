@@ -11,11 +11,13 @@ import { getUsers, getUserInfo } from "./components/api";
 
 function App() {
   const [reviews, setReviews] = useState("");
-  const [page, setPage] = useState(1);
   const [user, setUser] = useState(null);
   const [usersWithInfo, setUsersWithInfo] = useState([]);
   const [usersLoading, setUsersLoading] = useState(true);
-  console.log(user);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [singleReview, setSingleReview] = useState(null);
+
+  // console.log(user);
 
   useEffect(() => {
     const requestFunc = async () => {
@@ -36,10 +38,21 @@ function App() {
 
   return (
     <Router>
-      <RequireLogin usersWithInfo={usersWithInfo} user={user} setUser={setUser}>
+      <RequireLogin
+        usersLoading={usersLoading}
+        usersWithInfo={usersWithInfo}
+        user={user}
+        setUser={setUser}
+      >
         <div className="App">
           <Header />
-          <Nav reviews={reviews} setReviews={setReviews} user={user} />
+          <Nav
+            reviews={reviews}
+            setReviews={setReviews}
+            user={user}
+            setCurrentCategory={setCurrentCategory}
+            setSingleReview={setSingleReview}
+          />
           <Switch>
             <Router path="/home">
               <Home />
@@ -48,8 +61,9 @@ function App() {
               <Reviews
                 reviews={reviews}
                 setReviews={setReviews}
-                page={page}
-                setPage={setPage}
+                currentCategory={currentCategory}
+                singleReview={singleReview}
+                setSingleReview={setSingleReview}
               />
             </Router>
             <Router path="/user">
