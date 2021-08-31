@@ -1,20 +1,28 @@
+.Reviews {
+  margin-top: 60px;
+}
+
 img {
-  max-width: 400px;
+  width: 200px;
+  height: 200px;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
   margin: auto;
+  display: flex;
 }
 li {
-  max-width: 400px;
+  width: 400px;
+  height: 400px;
   margin: auto;
 }
 
 .page-selector {
   display: flex;
   justify-content: center;
+  margin-top: 60px;
 }
 .page-selector p {
   display: flex;

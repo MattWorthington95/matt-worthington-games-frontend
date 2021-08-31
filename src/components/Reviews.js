@@ -11,7 +11,9 @@ function Reviews({ reviews, setReviews, page, setPage }) {
       const request = await getReviews(page);
       const requestNextPageCheck = await getReviews(page + 1);
       console.log(requestNextPageCheck);
+
       setReviews(request);
+
       if (requestNextPageCheck.reviews.length) {
         setEndOfReviews(false);
       } else {
@@ -27,7 +29,7 @@ function Reviews({ reviews, setReviews, page, setPage }) {
   console.log(page);
   if (loading) return <p>loading...</p>;
   return (
-    <div>
+    <div className="Reviews">
       <ul>
         {reviews.reviews.map((review) => {
           return (

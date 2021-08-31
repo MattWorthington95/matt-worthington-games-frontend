@@ -9,3 +9,13 @@ export const getReviews = async (page) => {
   });
   return data;
 };
+
+export const getUsers = async () => {
+  const { data } = await gameReviewApi.get("/users");
+  return data;
+};
+
+export const getUserInfo = async (username) => {
+  const { data } = await gameReviewApi.get(`/users/${username}`);
+  return data;
+};

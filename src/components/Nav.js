@@ -2,7 +2,7 @@ import React from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
 
-function Nav() {
+function Nav({ user }) {
   return (
     <div>
       <div className="navbar">
@@ -29,8 +29,15 @@ function Nav() {
             </span>
           </div>
         </div>
-        <span>
-          <Link to="/users">Users</Link>
+        <span id="nav-user-name">
+          <Link to="/user" id="nav-user-name">
+            <img
+              id="nav-user-image"
+              src={user.avatar_url}
+              alt="little user avatar on nav bar"
+            />
+            &nbsp;&nbsp;{user.username}
+          </Link>
         </span>
       </div>
     </div>

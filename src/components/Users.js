@@ -1,11 +1,15 @@
-import React from "react";
+import "./User.css";
 
-function Users() {
+function User({ user, setUser }) {
   return (
     <div>
-      <p>This is Users</p>
+      <img src={user.avatar_url} alt="" />
+      <p>Username: {user.username}</p>
+      <p>Name: {user.name}</p>
+
+      <button onClick={() => setUser(null)}>LOG OUT</button>
     </div>
   );
 }
 
-export default Users;
+export default User;

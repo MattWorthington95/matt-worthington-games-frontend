@@ -1,0 +1,9 @@
+h1 {
+  text-align: center;
+}
+
+li {
+  text-align: center;
+  margin: 0;
+  display: inline-block;
+}

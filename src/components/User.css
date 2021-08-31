@@ -1,0 +1,19 @@
+img {
+  /* min-width: 200px;
+  min-height: 200px; */
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 70%;
+}
+li {
+  margin: 0;
+  display: inline-block;
+}
