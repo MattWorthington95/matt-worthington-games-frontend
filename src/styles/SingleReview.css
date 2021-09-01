@@ -1,0 +1,21 @@
+#review-comments {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  width: 60%;
+  margin: auto;
+}
+#review-comments li {
+  height: 200px;
+
+  list-style-type: none;
+  margin: 20px;
+  border-radius: 10px;
+  background-color: rgb(255, 230, 230);
+}
+
+#SingleReview img {
+  width: 400px;
+  height: 400px;
+}

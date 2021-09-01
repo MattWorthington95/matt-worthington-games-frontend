@@ -1,8 +1,8 @@
-import "./User.css";
+import "../styles/User.css";
 
 function User({ user, setUser }) {
   return (
-    <div>
+    <div className="user">
       <img src={user.avatar_url} alt="" />
       <p>Username: {user.username}</p>
       <p>Name: {user.name}</p>

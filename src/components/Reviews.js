@@ -1,38 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./Reviews.css";
-import { getReviews } from "./api";
+import React, { useState } from "react";
+import "../styles/Reviews.css";
 import { Link } from "react-router-dom";
 import SingleReview from "./SingleReview";
+import { useReviews } from "../hooks/useApi";
 
-function Reviews({
-  reviews,
-  setReviews,
-  currentCategory,
-  singleReview,
-  setSingleReview,
-}) {
-  const [loading, setLoading] = useState(true);
-  const [endOfReviews, setEndOfReviews] = useState(false);
+function Reviews({ currentCategory, singleReview, setSingleReview }) {
   const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    const requestFunc = async () => {
-      const request = await getReviews(currentCategory, page);
-      const requestNextPageCheck = await getReviews(currentCategory, page + 1);
-      console.log(requestNextPageCheck);
-
-      setReviews(request);
-
-      if (requestNextPageCheck.reviews.length) {
-        setEndOfReviews(false);
-      } else {
-        setEndOfReviews(true);
-      }
-
-      setLoading(false);
-    };
-    requestFunc();
-  }, [page, currentCategory]);
+  const { reviews, endOfReviews, loading } = useReviews(page, currentCategory);
 
   if (loading) return <p>loading...</p>;
   if (singleReview)
@@ -42,6 +16,8 @@ function Reviews({
         setSingleReview={setSingleReview}
       />
     );
+
+  console.log(reviews);
   return (
     <div className="Reviews">
       {currentCategory ? (
@@ -50,24 +26,30 @@ function Reviews({
         <h1>Game Reviews</h1>
       )}
       <ul>
-        {reviews.reviews.map((review) => {
-          return (
-            <Link
-              onClick={() => {
-                setSingleReview(review.review_id);
-              }}
-              to={`review/${review.review_id}`}
-            >
-              <li key={review.review_id}>
-                <img src={review.review_img_url} alt="" />
-                <p>{review.title}</p>
-                <p>Posted By{review.owner}</p>
-                <p>Comments: {review.comment_count}</p>
-                <p>Votes: {review.votes}</p>
-              </li>
-            </Link>
-          );
-        })}
+        <div>
+          {reviews.reviews.map((review) => {
+            return (
+              <Link
+                onClick={() => {
+                  setSingleReview(review.review_id);
+                }}
+                to={`reviews/${review.review_id}`}
+              >
+                <li key={review.review_id}>
+                  <div>
+                    <img src={review.review_img_url} alt="" />
+                  </div>
+                  <div>
+                    <p>{review.title}</p>
+                    <p>Posted By {review.owner}</p>
+                    <p>Comments: {review.comment_count}</p>
+                    <p>Votes: {review.votes}</p>
+                  </div>
+                </li>
+              </Link>
+            );
+          })}
+        </div>
       </ul>
       <div className="page-selector">
         <button

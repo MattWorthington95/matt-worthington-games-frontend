@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
-import "./Nav.css";
+import "../styles/Nav.css";
 import { Link } from "react-router-dom";
 import { getCategories } from "./api";
+import { useCategories } from "../hooks/useApi";
 
 function Nav({ user, setCurrentCategory, setSingleReview }) {
-  const [categories, setCategories] = useState([]);
-  const [catLoading, setCatLoading] = useState(true);
-
-  useEffect(() => {
-    const request = async () => {
-      const cats = await getCategories();
-      setCategories(cats.categories);
-      setCatLoading(false);
-    };
-    request();
-  }, []);
+  const { categories, setCategories, catLoading } = useCategories();
 
   if (catLoading) return <p>Loading...</p>;
+
   return (
     <div>
       <div className="navbar">
@@ -37,18 +29,24 @@ function Nav({ user, setCurrentCategory, setSingleReview }) {
             <i className="fa fa-caret-down"></i>
           </button>
           <div className="dropdown-content">
-            {categories.map((category) => {
-              return (
-                <span
-                  onClick={() => {
-                    setCurrentCategory(category.slug);
-                    setSingleReview(false);
-                  }}
-                >
-                  <Link to={`/reviews/${category.slug}`}>{category.slug}</Link>
-                </span>
-              );
-            })}
+            <ul>
+              {categories.map((category) => {
+                return (
+                  <li key={category.slug}>
+                    <span
+                      onClick={() => {
+                        setCurrentCategory(category.slug);
+                        setSingleReview(false);
+                      }}
+                    >
+                      <Link to={`/reviews?category=${category.slug}`}>
+                        {category.slug}
+                      </Link>
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
         <span id="nav-user-name">
