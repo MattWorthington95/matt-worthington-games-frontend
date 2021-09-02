@@ -7,8 +7,12 @@ import { useReviews } from "../hooks/useApi";
 
 function Reviews({ currentCategory, singleReview, setSingleReview }) {
   const [page, setPage] = useState(1);
-  const { reviews, endOfReviews, loading } = useReviews(page, currentCategory);
-
+  const [newSortBy, setNewSortBy] = useState(null);
+  const { reviews, endOfReviews, loading } = useReviews(
+    page,
+    currentCategory,
+    newSortBy
+  );
   if (loading)
     return (
       <Loader
@@ -20,7 +24,6 @@ function Reviews({ currentCategory, singleReview, setSingleReview }) {
       />
     );
 
-  console.log(reviews);
   return (
     <div className="Reviews">
       {currentCategory ? (
@@ -28,6 +31,16 @@ function Reviews({ currentCategory, singleReview, setSingleReview }) {
       ) : (
         <h1>Game Reviews</h1>
       )}
+      <select
+        name="sortBy"
+        id="sortBy"
+        value={newSortBy}
+        onChange={(event) => setNewSortBy(event.target.value)}
+      >
+        <option value="review_id">Newest</option>
+        <option value="comment_count">Most Comments</option>
+        <option value="votes">Most Votes</option>
+      </select>
       <ul>
         <div>
           {reviews.reviews.map((review) => {

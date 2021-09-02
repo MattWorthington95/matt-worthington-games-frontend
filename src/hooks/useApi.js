@@ -10,14 +10,14 @@ import {
 } from "../components/api";
 import { useEffect, useState } from "react";
 
-export const useReviews = (page, currentCategory) => {
+export const useReviews = (page, currentCategory, newSortBy) => {
   const [loading, setLoading] = useState(true);
   const [endOfReviews, setEndOfReviews] = useState(false);
   const [reviews, setReviews] = useState("");
   useEffect(() => {
     setLoading(true);
     const requestFunc = async () => {
-      const request = await getReviews(currentCategory, page);
+      const request = await getReviews(currentCategory, page, newSortBy);
       const requestNextPageCheck = await getReviews(currentCategory, page + 1);
 
       setReviews(request);
@@ -31,7 +31,7 @@ export const useReviews = (page, currentCategory) => {
       setLoading(false);
     };
     requestFunc();
-  }, [page, currentCategory]);
+  }, [page, currentCategory, newSortBy]);
 
   return { reviews, endOfReviews, loading };
 };

@@ -3,11 +3,24 @@ const gameReviewApi = axios.create({
   baseURL: "https://matt-worthington-games.herokuapp.com/api",
 });
 
-export const getReviews = async (currentCategory, page) => {
-  const { data } = await gameReviewApi.get("/reviews", {
-    params: { page, category: currentCategory },
-  });
-  return data;
+export const getReviews = async (currentCategory, page, newSortBy) => {
+  if (!newSortBy) {
+    const { data } = await gameReviewApi.get("/reviews", {
+      params: {
+        page,
+        category: currentCategory,
+      },
+    });
+    return data;
+  } else {
+    const { data } = await gameReviewApi.get(`/reviews?sort_by=${newSortBy}`, {
+      params: {
+        page,
+        category: currentCategory,
+      },
+    });
+    return data;
+  }
 };
 
 export const getUsers = async () => {
