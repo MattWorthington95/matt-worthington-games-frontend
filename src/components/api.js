@@ -36,10 +36,26 @@ export const getCommentsByReviewId = async (singleReview) => {
 };
 
 export const patchVotesByReviewId = async (review_id) => {
-  console.log(review_id);
   const { data } = await gameReviewApi.patch(`/reviews/${review_id}/`, {
     inc_votes: 1,
   });
 
   return data;
 };
+
+export const postCommentByReviewId = async (review_id, user, newComment) => {
+  console.log(user.username, newComment);
+  const { data } = await gameReviewApi.post(`/reviews/${review_id}/comments`, {
+    username: user.username,
+    body: newComment,
+  });
+  console.log(data);
+
+  return data;
+};
+
+// "/api/reviews/2/comments"
+// {
+//   username: "mallionaire",
+//   body: "NEW COMMENT! <3",
+// }

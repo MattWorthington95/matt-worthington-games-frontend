@@ -6,6 +6,7 @@ import {
   getReviewById,
   getCommentsByReviewId,
   patchVotesByReviewId,
+  postCommentByReviewId,
 } from "../components/api";
 import { useEffect, useState } from "react";
 
@@ -75,22 +76,21 @@ export const useCategories = () => {
   return { categories, setCategories, catLoading };
 };
 
-export const useReviewById = (singleReview) => {
+export const useReviewById = (review_id) => {
   const [review, setReview] = useState(null);
   const [reviewLoaded, setReviewLoaded] = useState(true);
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
     const requestFunc = async () => {
-      const request = await getReviewById(singleReview);
-      const requestComments = await getCommentsByReviewId(singleReview);
+      const request = await getReviewById(review_id);
+      const requestComments = await getCommentsByReviewId(review_id);
       setComments(requestComments);
-      console.log(requestComments);
       setReview(request);
       setReviewLoaded(false);
     };
     requestFunc();
-  }, [singleReview]);
+  }, []);
 
   return { review, reviewLoaded, comments };
 };
@@ -118,4 +118,18 @@ export const useVote = (review_id) => {
   };
 
   return { voteChange, incVotes };
+};
+
+export const useComment = (review_id, user) => {
+  const postComment = (newComment) => {
+    console.log(newComment);
+    const requestFunc = async () => {
+      const request = await postCommentByReviewId(review_id, user, newComment);
+      console.log(request);
+      return request;
+    };
+    requestFunc();
+  };
+
+  return { postComment };
 };

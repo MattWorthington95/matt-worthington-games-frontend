@@ -7,12 +7,11 @@ import { useReviewById, useVote } from "../hooks/useApi";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import AddCommentForm from "./AddCommentForm";
+import CommentForm from "./CommentForm";
 
-function SingleReview() {
+function SingleReview({ user }) {
   const { review_id } = useParams();
-
   const { review, reviewLoaded, comments } = useReviewById(review_id);
-
   const { voteChange, incVotes } = useVote(review_id);
 
   if (reviewLoaded)
@@ -41,11 +40,7 @@ function SingleReview() {
       <Comments review={review}>
         <ul id="review-comments">
           <AddCommentForm>
-            <p>FORM</p>
-            <p>FORM</p>
-            <p>FORM</p>
-            <p>FORM</p>
-            <p>FORM</p>
+            <CommentForm review_id={review_id} user={user} />
           </AddCommentForm>
           {comments.comments.map((comment) => {
             return (

@@ -19,10 +19,9 @@ function App() {
         <div className="App">
           <Header />
           <Nav user={user} setCurrentCategory={setCurrentCategory} />
-
           <Switch>
             <Route exact path="/reviews/:review_id">
-              <SingleReview />
+              <SingleReview user={user} />
             </Route>
             <Route path="/home">
               <Home />
