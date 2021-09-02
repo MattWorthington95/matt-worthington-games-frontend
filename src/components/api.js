@@ -35,4 +35,11 @@ export const getCommentsByReviewId = async (singleReview) => {
   return data;
 };
 
-// https://matt-worthington-games.herokuapp.com/api/reviews?page=1&category=strategy
+export const patchVotesByReviewId = async (review_id) => {
+  console.log(review_id);
+  const { data } = await gameReviewApi.patch(`/reviews/${review_id}/`, {
+    inc_votes: 1,
+  });
+
+  return data;
+};

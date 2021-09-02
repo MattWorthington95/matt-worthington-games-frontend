@@ -5,6 +5,7 @@ import {
   getUserInfo,
   getReviewById,
   getCommentsByReviewId,
+  patchVotesByReviewId,
 } from "../components/api";
 import { useEffect, useState } from "react";
 
@@ -89,7 +90,32 @@ export const useReviewById = (singleReview) => {
       setReviewLoaded(false);
     };
     requestFunc();
-  }, []);
+  }, [singleReview]);
 
   return { review, reviewLoaded, comments };
+};
+
+export const useVote = (review_id) => {
+  const [voteChange, setVoteChange] = useState(0);
+
+  const incVotes = () => {
+    setVoteChange((currentVoteChange) => {
+      return currentVoteChange + 1;
+    });
+
+    const requestFunc = async () => {
+      try {
+        const request = await patchVotesByReviewId(review_id);
+        return request;
+      } catch (error) {
+        console.log(error);
+        setVoteChange((currentVoteChange) => {
+          return currentVoteChange - 1;
+        });
+      }
+    };
+    requestFunc();
+  };
+
+  return { voteChange, incVotes };
 };

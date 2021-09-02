@@ -1,5 +1,4 @@
 import "../styles/RequireLogin.css";
-import { Link } from "react-router-dom";
 
 import { getUsers, getUserInfo } from "../components/api";
 import { useUsers } from "../hooks/useApi";
@@ -17,9 +16,7 @@ function RequireLogin({ user, children, setUser }) {
           return (
             <li key={user.user.username} onClick={() => setUser(user.user)}>
               <p>{user.user.username}</p>
-              <Link to="/home">
-                <img src={user.user.avatar_url} alt="" />
-              </Link>
+              <img src={user.user.avatar_url} alt="" />
             </li>
           );
         })}

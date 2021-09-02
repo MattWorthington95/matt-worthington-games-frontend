@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
 import "../styles/Nav.css";
 import { Link } from "react-router-dom";
-import { getCategories } from "./api";
+
 import { useCategories } from "../hooks/useApi";
 
-function Nav({ user, setCurrentCategory, setSingleReview }) {
-  const { categories, setCategories, catLoading } = useCategories();
+function Nav({ user, setCurrentCategory }) {
+  const { categories, catLoading } = useCategories();
 
   if (catLoading) return <p>Loading...</p>;
-
   return (
     <div>
       <div className="navbar">
@@ -18,7 +16,6 @@ function Nav({ user, setCurrentCategory, setSingleReview }) {
         <span
           onClick={() => {
             setCurrentCategory(null);
-            setSingleReview(false);
           }}
         >
           <Link to="/reviews">Reviews</Link>
@@ -36,7 +33,6 @@ function Nav({ user, setCurrentCategory, setSingleReview }) {
                     <span
                       onClick={() => {
                         setCurrentCategory(category.slug);
-                        setSingleReview(false);
                       }}
                     >
                       <Link to={`/reviews?category=${category.slug}`}>

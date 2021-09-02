@@ -6,6 +6,7 @@
   text-align: center;
   margin: 0;
   display: inline-block;
+  cursor: pointer;
 }
 #require-login {
   display: flex;

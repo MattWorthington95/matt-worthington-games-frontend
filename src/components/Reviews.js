@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import "../styles/Reviews.css";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Link } from "react-router-dom";
-import SingleReview from "./SingleReview";
 import { useReviews } from "../hooks/useApi";
 
 function Reviews({ currentCategory, singleReview, setSingleReview }) {
   const [page, setPage] = useState(1);
   const { reviews, endOfReviews, loading } = useReviews(page, currentCategory);
 
-  if (loading) return <p>loading...</p>;
-  if (singleReview)
+  if (loading)
     return (
-      <SingleReview
-        singleReview={singleReview}
-        setSingleReview={setSingleReview}
+      <Loader
+        type="Puff"
+        color="#00BFFF"
+        height={100}
+        width={100}
+        timeout={3000} //3 secs
       />
     );
 
@@ -29,13 +32,8 @@ function Reviews({ currentCategory, singleReview, setSingleReview }) {
         <div>
           {reviews.reviews.map((review) => {
             return (
-              <Link
-                onClick={() => {
-                  setSingleReview(review.review_id);
-                }}
-                to={`reviews/${review.review_id}`}
-              >
-                <li key={review.review_id}>
+              <Link to={`/reviews/${review.review_id}`} key={review.review_id}>
+                <li>
                   <div>
                     <img src={review.review_img_url} alt="" />
                   </div>
