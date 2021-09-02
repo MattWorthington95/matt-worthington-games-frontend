@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useComment } from "../hooks/useApi";
+import { usePostComment } from "../hooks/useApi";
 
-function CommentForm({ review_id, user }) {
+function CommentForm({ review_id, user, setCommentAdded }) {
   const [newComment, setNewComment] = useState("");
 
-  const { postComment } = useComment(review_id, user);
+  const { postComment } = usePostComment(review_id, user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(newComment);
     postComment(newComment);
+    setCommentAdded((currentCommentAdded) => {
+      return currentCommentAdded + 1;
+    });
+    setNewComment("");
   };
 
   return (

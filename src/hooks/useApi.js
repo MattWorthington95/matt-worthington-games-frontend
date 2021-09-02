@@ -79,20 +79,17 @@ export const useCategories = () => {
 export const useReviewById = (review_id) => {
   const [review, setReview] = useState(null);
   const [reviewLoaded, setReviewLoaded] = useState(true);
-  const [comments, setComments] = useState(null);
 
   useEffect(() => {
     const requestFunc = async () => {
-      const request = await getReviewById(review_id);
-      const requestComments = await getCommentsByReviewId(review_id);
-      setComments(requestComments);
+      const { review: request } = await getReviewById(review_id);
       setReview(request);
       setReviewLoaded(false);
     };
     requestFunc();
-  }, []);
+  }, [review_id]);
 
-  return { review, reviewLoaded, comments };
+  return { review, reviewLoaded };
 };
 
 export const useVote = (review_id) => {
@@ -120,9 +117,26 @@ export const useVote = (review_id) => {
   return { voteChange, incVotes };
 };
 
-export const useComment = (review_id, user) => {
+export const useGetComment = (review_id, commentAdd) => {
+  const [comments, setComments] = useState([]);
+  const [commentsLoading, setCommentsLoading] = useState(true);
+  useEffect(() => {
+    setCommentsLoading(true);
+    const requestFunc = async () => {
+      const { comments: requestComments } = await getCommentsByReviewId(
+        review_id
+      );
+      setComments(requestComments);
+      setCommentsLoading(false);
+      return requestComments;
+    };
+    requestFunc();
+  }, [review_id, commentAdd]);
+  return { comments, commentsLoading };
+};
+
+export const usePostComment = (review_id, user) => {
   const postComment = (newComment) => {
-    console.log(newComment);
     const requestFunc = async () => {
       const request = await postCommentByReviewId(review_id, user, newComment);
       console.log(request);

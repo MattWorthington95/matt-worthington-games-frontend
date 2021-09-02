@@ -40,6 +40,3 @@ function App() {
 }
 
 export default App;
-// <Router path="/reviews?">
-//               <p>category</p>
-//             </Router>
