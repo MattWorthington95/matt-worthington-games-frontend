@@ -3,6 +3,11 @@ const gameReviewApi = axios.create({
   baseURL: "https://matt-worthington-games.herokuapp.com/api",
 });
 
+export const getDefaultUser = async () => {
+  const { data } = await gameReviewApi.get("/users/happyamy2016");
+  return data;
+};
+
 export const getReviews = async (currentCategory, page, newSortBy) => {
   if (!newSortBy) {
     const { data } = await gameReviewApi.get("/reviews", {

@@ -22,6 +22,7 @@ function CommentForm({ review_id, user, setCommentAdded }) {
         <label>
           Write a Comment:
           <input
+            required
             value={newComment}
             onChange={(event) => setNewComment(event.target.value)}
           />

@@ -5,13 +5,22 @@ import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Reviews from "./components/Reviews";
 import User from "./components/Users";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RequireLogin from "./components/RequireLogin";
 import SingleReview from "./components/SingleReview";
+import { getDefaultUser } from "./components/api";
 
 function App() {
   const [user, setUser] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(null);
+
+  useEffect(() => {
+    const requestFunc = async () => {
+      const { user: request } = await getDefaultUser();
+      setUser(request);
+    };
+    requestFunc();
+  }, []);
 
   return (
     <BrowserRouter>

@@ -5,7 +5,6 @@
 .Reviews img {
   width: 300px;
   height: 300px;
-  margin-right: 50px;
 }
 
 .Reviews ul {
@@ -14,7 +13,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   font-size: 20px;
 }
 
@@ -24,9 +23,12 @@
   margin: auto;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 150px;
 }
 .Reviews li p {
   width: 300px;
+  text-align: center;
 }
 
 .page-selector {
@@ -48,4 +50,17 @@
   align-items: center;
   padding: 2px;
   height: 40px;
+}
+
+@media only screen and (min-width: 960px) {
+  .Reviews li {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 0px;
+  }
 }

@@ -7,7 +7,7 @@ import { useReviews } from "../hooks/useApi";
 
 function Reviews({ currentCategory, singleReview, setSingleReview }) {
   const [page, setPage] = useState(1);
-  const [newSortBy, setNewSortBy] = useState(null);
+  const [newSortBy, setNewSortBy] = useState("");
   const { reviews, endOfReviews, loading } = useReviews(
     page,
     currentCategory,
@@ -42,25 +42,23 @@ function Reviews({ currentCategory, singleReview, setSingleReview }) {
         <option value="votes">Most Votes</option>
       </select>
       <ul>
-        <div>
-          {reviews.reviews.map((review) => {
-            return (
-              <Link to={`/reviews/${review.review_id}`} key={review.review_id}>
-                <li>
-                  <div>
-                    <img src={review.review_img_url} alt="" />
-                  </div>
-                  <div>
-                    <p>{review.title}</p>
-                    <p>Posted By {review.owner}</p>
-                    <p>Comments: {review.comment_count}</p>
-                    <p>Votes: {review.votes}</p>
-                  </div>
-                </li>
-              </Link>
-            );
-          })}
-        </div>
+        {reviews.reviews.map((review) => {
+          return (
+            <Link to={`/reviews/${review.review_id}`} key={review.review_id}>
+              <li>
+                <div>
+                  <img src={review.review_img_url} alt="" />
+                </div>
+                <div>
+                  <p>{review.title}</p>
+                  <p>Posted By {review.owner}</p>
+                  <p>Comments: {review.comment_count}</p>
+                  <p>Votes: {review.votes}</p>
+                </div>
+              </li>
+            </Link>
+          );
+        })}
       </ul>
       <div className="page-selector">
         <button
