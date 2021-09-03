@@ -10,7 +10,7 @@ function SingleReview({ user }) {
   const { review_id } = useParams();
   const { review, reviewLoaded } = useReviewById(review_id);
   const { voteChange, incVotes } = useVote(review_id);
-
+  console.log(review);
   if (reviewLoaded)
     return (
       <Loader
@@ -21,6 +21,8 @@ function SingleReview({ user }) {
         timeout={3000} //3 secs
       />
     );
+
+  if (review.message) return <p>{review.message}</p>;
 
   return (
     <div id="SingleReview">

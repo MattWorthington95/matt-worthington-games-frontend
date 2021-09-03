@@ -79,12 +79,22 @@ export const useCategories = () => {
 export const useReviewById = (review_id) => {
   const [review, setReview] = useState(null);
   const [reviewLoaded, setReviewLoaded] = useState(true);
+  console.log(review);
 
   useEffect(() => {
     const requestFunc = async () => {
-      const { review: request } = await getReviewById(review_id);
-      setReview(request);
-      setReviewLoaded(false);
+      try {
+        const { review: request } = await getReviewById(review_id);
+        console.log(request);
+        setReview(request);
+        setReviewLoaded(false);
+      } catch (err) {
+        setReview({
+          status: err.response.status,
+          message: err.response.data.message,
+        });
+        setReviewLoaded(false);
+      }
     };
     requestFunc();
   }, [review_id]);
@@ -146,4 +156,22 @@ export const usePostComment = (review_id, user) => {
   };
 
   return { postComment };
+};
+
+export const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => {
+      setMatches(media.matches);
+    };
+    media.addListener(listener);
+    return () => media.removeListener(listener);
+  }, [matches, query]);
+
+  return { matches };
 };
