@@ -21,6 +21,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Instructions on how to clone, and run app locally
 
-- Clone git repo from https://github.com/MattWorthington95/nc-games
+- Clone git repo from https://github.com/MattWorthington95/nc-games, see command line below
+  - git clone https://github.com/MattWorthington95/nc-games.git
 - Once cloned, run `npm i` to install dependencies
 - From there, run `npm start` to start app locally on [http://localhost:3000](http://localhost:3000)

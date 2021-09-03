@@ -2,7 +2,7 @@ import "../styles/Nav.css";
 import { Link } from "react-router-dom";
 
 import { useCategories, useMediaQuery } from "../hooks/useApi";
-// import { useMediaQuery } from "../useMediaQuery";
+
 import TestHamburgerMenu from "./TestHamburgerMenu";
 
 function Nav({ user, setCurrentCategory }) {

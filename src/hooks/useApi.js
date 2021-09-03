@@ -7,29 +7,39 @@ import {
   getCommentsByReviewId,
   patchVotesByReviewId,
   postCommentByReviewId,
-} from "../components/api";
+} from "../api";
 import { useEffect, useState } from "react";
 
-export const useReviews = (page, currentCategory, newSortBy) => {
+export const useReviews = (page, currentCategory, newSortBy, search) => {
+  console.log();
   const [loading, setLoading] = useState(true);
   const [endOfReviews, setEndOfReviews] = useState(false);
   const [reviews, setReviews] = useState("");
   useEffect(() => {
     setLoading(true);
+
     const requestFunc = async () => {
-      const request = await getReviews(currentCategory, page, newSortBy);
-      const requestNextPageCheck = await getReviews(currentCategory, page + 1);
-
-      setReviews(request);
-
-      if (requestNextPageCheck.reviews.length) {
-        setEndOfReviews(false);
-      } else {
-        setEndOfReviews(true);
+      try {
+        const request = await getReviews(page, newSortBy, search);
+        const requestNextPageCheck = await getReviews(
+          page + 1,
+          newSortBy,
+          search
+        );
+        setReviews(request);
+        if (requestNextPageCheck.reviews.length) {
+          setEndOfReviews(false);
+        } else {
+          setEndOfReviews(true);
+        }
+        setLoading(false);
+      } catch (err) {
+        console.log(err.response.data);
+        setReviews(err.response.data);
+        setLoading(false);
       }
-
-      setLoading(false);
     };
+
     requestFunc();
   }, [page, currentCategory, newSortBy]);
 
@@ -106,22 +116,24 @@ export const useVote = (review_id) => {
   const [voteChange, setVoteChange] = useState(0);
 
   const incVotes = () => {
-    setVoteChange((currentVoteChange) => {
-      return currentVoteChange + 1;
-    });
+    if (voteChange === 0) {
+      setVoteChange((currentVoteChange) => {
+        return currentVoteChange + 1;
+      });
 
-    const requestFunc = async () => {
-      try {
-        const request = await patchVotesByReviewId(review_id);
-        return request;
-      } catch (error) {
-        console.log(error);
-        setVoteChange((currentVoteChange) => {
-          return currentVoteChange - 1;
-        });
-      }
-    };
-    requestFunc();
+      const requestFunc = async () => {
+        try {
+          const request = await patchVotesByReviewId(review_id);
+          return request;
+        } catch (error) {
+          console.log(error);
+          setVoteChange((currentVoteChange) => {
+            return currentVoteChange - 1;
+          });
+        }
+      };
+      requestFunc();
+    }
   };
 
   return { voteChange, incVotes };

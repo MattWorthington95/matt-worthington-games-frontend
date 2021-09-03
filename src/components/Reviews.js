@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import "../styles/Reviews.css";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useReviews } from "../hooks/useApi";
 
-function Reviews({ currentCategory, singleReview, setSingleReview }) {
+function Reviews({ currentCategory }) {
+  const { search } = useLocation();
+  console.log(search);
   const [page, setPage] = useState(1);
   const [newSortBy, setNewSortBy] = useState("");
   const { reviews, endOfReviews, loading } = useReviews(
     page,
     currentCategory,
-    newSortBy
+    newSortBy,
+    search
   );
+
   if (loading)
     return (
       <Loader
@@ -23,6 +27,10 @@ function Reviews({ currentCategory, singleReview, setSingleReview }) {
         timeout={3000} //3 secs
       />
     );
+
+  console.log(reviews);
+
+  if (reviews.message) return <p>{reviews.message}</p>;
 
   return (
     <div className="Reviews">

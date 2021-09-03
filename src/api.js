@@ -8,12 +8,16 @@ export const getDefaultUser = async () => {
   return data;
 };
 
-export const getReviews = async (currentCategory, page, newSortBy) => {
+export const getReviews = async (page, newSortBy, search) => {
+  let URL = "/reviews";
+
+  if (search) URL += search;
+
   if (!newSortBy) {
-    const { data } = await gameReviewApi.get("/reviews", {
+    const { data } = await gameReviewApi.get(URL, {
       params: {
         page,
-        category: currentCategory,
+        search,
       },
     });
     return data;
@@ -21,7 +25,7 @@ export const getReviews = async (currentCategory, page, newSortBy) => {
     const { data } = await gameReviewApi.get(`/reviews?sort_by=${newSortBy}`, {
       params: {
         page,
-        category: currentCategory,
+        search,
       },
     });
     return data;

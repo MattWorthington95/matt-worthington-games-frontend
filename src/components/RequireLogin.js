@@ -1,6 +1,6 @@
 import "../styles/RequireLogin.css";
 
-import { getUsers, getUserInfo } from "../components/api";
+import { getUsers, getUserInfo } from "../api";
 import { useUsers } from "../hooks/useApi";
 
 function RequireLogin({ user, children, setUser }) {
