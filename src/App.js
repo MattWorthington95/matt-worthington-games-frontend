@@ -19,6 +19,7 @@ function App() {
       const { user: request } = await getDefaultUser();
       setUser(request);
     };
+
     requestFunc();
   }, []);
 
