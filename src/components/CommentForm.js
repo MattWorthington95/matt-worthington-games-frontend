@@ -4,15 +4,12 @@ import { usePostComment } from "../hooks/useApi";
 function CommentForm({ review_id, user, setCommentAdded }) {
   const [newComment, setNewComment] = useState("");
 
-  const { postComment } = usePostComment(review_id, user);
+  const { postComment } = usePostComment(review_id, user, setCommentAdded);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(newComment);
     postComment(newComment);
-    setCommentAdded((currentCommentAdded) => {
-      return currentCommentAdded + 1;
-    });
+
     setNewComment("");
   };
 

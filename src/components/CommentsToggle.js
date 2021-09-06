@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function CommentsToggle({ children, review }) {
+function CommentsToggle({ children, review, commentAdd }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -9,7 +9,9 @@ function CommentsToggle({ children, review }) {
 
   return (
     <div>
-      <button onClick={toggleOpen}>Comments: {review.comment_count}</button>
+      <button onClick={toggleOpen}>
+        Comments: {review.comment_count + commentAdd}
+      </button>
       {isOpen && children}
     </div>
   );

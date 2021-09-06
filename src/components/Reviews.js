@@ -21,7 +21,7 @@ function Reviews({ currentCategory }) {
     return (
       <Loader
         type="Puff"
-        color="#00BFFF"
+        color="red"
         height={100}
         width={100}
         timeout={3000} //3 secs

@@ -1,18 +1,29 @@
-import { useState } from "react";
-import { useGetComment } from "../hooks/useApi";
+import {
+  useDeleteComment,
+  useGetComment,
+  usePatchCommentVoteById,
+} from "../hooks/useApi";
 import AddCommentForm from "./AddCommentForm";
 import CommentForm from "./CommentForm";
 import Loader from "react-loader-spinner";
 
-function Comments({ review_id, user }) {
-  const [commentAdd, setCommentAdded] = useState(1);
-  const { comments, commentsLoading } = useGetComment(review_id, commentAdd);
+import SingleComment from "./SingleComment";
+
+function Comments({ review_id, user, commentAdd, setCommentAdded }) {
+  const { hasCommentBeenDeleted, setCommentToDelete } =
+    useDeleteComment(setCommentAdded);
+  const { comments, commentsLoading, setCommentsLoading } = useGetComment(
+    review_id,
+    commentAdd,
+    hasCommentBeenDeleted
+  );
+  const { setCommentToPatch } = usePatchCommentVoteById();
 
   if (commentsLoading)
     return (
       <Loader
         type="Puff"
-        color="#00BFFF"
+        color="red"
         height={100}
         width={100}
         timeout={3000} //3 secs
@@ -26,15 +37,19 @@ function Comments({ review_id, user }) {
           review_id={review_id}
           user={user}
           setCommentAdded={setCommentAdded}
+          setCommentsLoading={setCommentsLoading}
         />
       </AddCommentForm>
 
       {comments.map((comment) => {
         return (
           <li key={comment.comment_id}>
-            <p>{comment.author} wrote: </p>
-            <p>{comment.body}</p>
-            <button>Votes: {comment.votes}</button>
+            <SingleComment
+              comment={comment}
+              user={user}
+              setCommentToDelete={setCommentToDelete}
+              setCommentToPatch={setCommentToPatch}
+            />
           </li>
         );
       })}

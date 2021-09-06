@@ -8,14 +8,15 @@ import Comments from "./Comments";
 
 function SingleReview({ user }) {
   const { review_id } = useParams();
-  const { review, reviewLoaded } = useReviewById(review_id);
+  const { review, reviewLoaded, commentAdd, setCommentAdded } =
+    useReviewById(review_id);
   const { voteChange, incVotes } = useVote(review_id);
-  console.log(review);
+
   if (reviewLoaded)
     return (
       <Loader
         type="Puff"
-        color="#00BFFF"
+        color="red"
         height={100}
         width={100}
         timeout={3000} //3 secs
@@ -35,8 +36,13 @@ function SingleReview({ user }) {
       <p>By {review.owner}</p>
       <p>{review.review_body}</p>
       <button onClick={incVotes}>Votes: {review.votes + voteChange} </button>
-      <CommentsToggle review={review}>
-        <Comments review_id={review_id} user={user} />
+      <CommentsToggle review={review} commentAdd={commentAdd}>
+        <Comments
+          review_id={review_id}
+          user={user}
+          commentAdd={commentAdd}
+          setCommentAdded={setCommentAdded}
+        />
       </CommentsToggle>
     </div>
   );

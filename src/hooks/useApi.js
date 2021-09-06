@@ -7,8 +7,10 @@ import {
   getCommentsByReviewId,
   patchVotesByReviewId,
   postCommentByReviewId,
+  deleteCommentById,
+  patchCommentVoteById,
 } from "../api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const useReviews = (page, currentCategory, newSortBy, search) => {
   console.log();
@@ -89,13 +91,13 @@ export const useCategories = () => {
 export const useReviewById = (review_id) => {
   const [review, setReview] = useState(null);
   const [reviewLoaded, setReviewLoaded] = useState(true);
-  console.log(review);
+  const [commentAdd, setCommentAdded] = useState(0);
 
   useEffect(() => {
     const requestFunc = async () => {
       try {
         const { review: request } = await getReviewById(review_id);
-        console.log(request);
+
         setReview(request);
         setReviewLoaded(false);
       } catch (err) {
@@ -109,7 +111,7 @@ export const useReviewById = (review_id) => {
     requestFunc();
   }, [review_id]);
 
-  return { review, reviewLoaded };
+  return { review, reviewLoaded, commentAdd, setCommentAdded };
 };
 
 export const useVote = (review_id) => {
@@ -139,9 +141,10 @@ export const useVote = (review_id) => {
   return { voteChange, incVotes };
 };
 
-export const useGetComment = (review_id, commentAdd) => {
+export const useGetComment = (review_id, commentAdd, hasCommentBeenDeleted) => {
   const [comments, setComments] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
+
   useEffect(() => {
     setCommentsLoading(true);
     const requestFunc = async () => {
@@ -153,15 +156,18 @@ export const useGetComment = (review_id, commentAdd) => {
       return requestComments;
     };
     requestFunc();
-  }, [review_id, commentAdd]);
+  }, [review_id, commentAdd, hasCommentBeenDeleted]);
   return { comments, commentsLoading };
 };
 
-export const usePostComment = (review_id, user) => {
+export const usePostComment = (review_id, user, setCommentAdded) => {
   const postComment = (newComment) => {
     const requestFunc = async () => {
       const request = await postCommentByReviewId(review_id, user, newComment);
-      console.log(request);
+      setCommentAdded((currentCommentAdded) => {
+        return currentCommentAdded + 1;
+      });
+
       return request;
     };
     requestFunc();
@@ -170,20 +176,38 @@ export const usePostComment = (review_id, user) => {
   return { postComment };
 };
 
-export const useMediaQuery = (query) => {
-  const [matches, setMatches] = useState(false);
-
+export const useDeleteComment = (setCommentAdded) => {
+  const [commentToDelete, setCommentToDelete] = useState("");
+  const [hasCommentBeenDeleted, setHasCommentBeenDeleted] = useState(0);
+  let initialRender = useRef(true);
   useEffect(() => {
-    const media = window.matchMedia(query);
-    if (media.matches !== matches) {
-      setMatches(media.matches);
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      const requestFunc = async () => {
+        const deleteCom = await deleteCommentById(commentToDelete);
+        setHasCommentBeenDeleted((current) => current + 1);
+        setCommentAdded((current) => current - 1);
+      };
+      requestFunc();
     }
-    const listener = () => {
-      setMatches(media.matches);
-    };
-    media.addListener(listener);
-    return () => media.removeListener(listener);
-  }, [matches, query]);
+  }, [commentToDelete]);
+  return { hasCommentBeenDeleted, setCommentToDelete };
+};
 
-  return { matches };
+export const usePatchCommentVoteById = () => {
+  const [commentToPatch, setCommentToPatch] = useState("");
+  let initialRender = useRef(true);
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      const requestFunc = async () => {
+        const patchCommentVote = await patchCommentVoteById(commentToPatch);
+      };
+      requestFunc();
+    }
+  }, [commentToPatch]);
+
+  return { setCommentToPatch };
 };

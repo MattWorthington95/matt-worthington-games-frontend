@@ -76,8 +76,15 @@ export const postCommentByReviewId = async (review_id, user, newComment) => {
   return data;
 };
 
-// "/api/reviews/2/comments"
-// {
-//   username: "mallionaire",
-//   body: "NEW COMMENT! <3",
-// }
+export const deleteCommentById = async (commentToDelete) => {
+  const { data } = await gameReviewApi.delete(`/comments/${commentToDelete}`);
+  console.log(data);
+};
+
+export const patchCommentVoteById = async (commentToPatch) => {
+  await gameReviewApi.patch(`/comments/${commentToPatch}`, {
+    inc_votes: 1,
+  });
+};
+
+//{ inc_votes: 1 }
