@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Header from "./components/Header";
-import Nav from "./components/Nav";
 
 import Reviews from "./components/Reviews";
 import User from "./components/Users";
@@ -9,6 +8,7 @@ import { useState, useEffect } from "react";
 import RequireLogin from "./components/RequireLogin";
 import SingleReview from "./components/SingleReview";
 import { getDefaultUser } from "./api";
+import Nav from "./components/Nav";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,7 +19,6 @@ function App() {
       const { user: request } = await getDefaultUser();
       setUser(request);
     };
-
     requestFunc();
   }, []);
 
