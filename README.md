@@ -1,12 +1,12 @@
 ### Link to hosted version - (PlaceHolder for Hosted Version)
 
-# Northcoders Games
+# Matt Worthington Games FE
 
 ## About App
 
-Northcoders Games is a social games content rating, and discussion website.
+Matt Worthington Games is a social games content rating, and discussion website.
 
-Northcoders Games has game reviews which are divided into categories. Each review has user curated ratings and can be up or down voted using the API. Users can also add comments about an review. Users can also add comments about a review.
+This website has game reviews which are divided into categories. Each review has user curated ratings and can be up or down voted using the API. Users can also add comments about an review. Users can also add comments about a review.
 
 ## The Process
 
