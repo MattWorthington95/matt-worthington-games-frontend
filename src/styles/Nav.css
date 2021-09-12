@@ -9,7 +9,7 @@
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: #373a47;
+  background: red;
 }
 
 /* Color/shape of burger icon bars on hover*/
@@ -100,7 +100,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
   .menu-item {
     color: white;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 20px;
   }
   #reviews {
     margin-bottom: 30px;

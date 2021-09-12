@@ -54,14 +54,20 @@ function Reviews({ currentCategory }) {
           return (
             <Link to={`/reviews/${review.review_id}`} key={review.review_id}>
               <li>
-                <div>
+                <div className="review-image">
                   <img src={review.review_img_url} alt="" />
                 </div>
-                <div>
-                  <p>{review.title}</p>
-                  <p>Posted By {review.owner}</p>
-                  <p>Comments: {review.comment_count}</p>
-                  <p>Votes: {review.votes}</p>
+                <div className="review-info">
+                  <p id="review-title">{review.title}</p>
+                  <p id="review-owner">
+                    Posted By <span>{review.owner}</span>
+                  </p>
+                  <p id="review-votes">
+                    <span>{review.votes}</span> votes
+                  </p>
+                  <p id="review-comment">
+                    <span>{review.comment_count}</span> comments
+                  </p>
                 </div>
               </li>
             </Link>
